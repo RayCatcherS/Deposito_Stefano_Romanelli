@@ -1,2 +1,3 @@
 # Deposito_Stefano_Romanelli
-Deposito_Romanelli
+Stefano Romanelli
+email: romanelli1996@gmail.com
