@@ -17,6 +17,8 @@ print(set3)  # stampa gli elementi senza duplicati
 # - I set NON hanno indici: non puoi fare set3[0]
 # - Inoltre l'ordine di stampa può variare (perché il set è non ordinato)
 
+set3.add(6)        # aggiunge l'elemento 6 al set
+set3.remove(2)     # rimuove l'elemento 2 dal set
 
 # operazioni con i set
 
