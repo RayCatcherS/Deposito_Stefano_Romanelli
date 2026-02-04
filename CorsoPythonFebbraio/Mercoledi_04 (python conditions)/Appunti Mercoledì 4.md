@@ -18,7 +18,7 @@ collezione: gruppo di oggetti o struttura dati
 
 
 
-#### Tuple 
+#### Tuple
 
 sono modificabili una sola volta.
 
@@ -35,4 +35,8 @@ gestisce il controllo di flusso del codice e decide se una porzione di codice de
 
 
 **Cicli:** decidono e controllano quante volte ripetere il codice
+
+
+
+**Condizione** (IF):
 
