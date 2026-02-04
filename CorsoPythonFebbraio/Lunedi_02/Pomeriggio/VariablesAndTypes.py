@@ -7,5 +7,5 @@ name = input("Inserisci il tuo nome: ")
 
 # print("Ciao mi chiamo" , name, "e ho" , age, "anni.")
 
-
+len()
 print(name[100])

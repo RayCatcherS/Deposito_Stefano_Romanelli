@@ -1,0 +1,5 @@
+Prompt Engineering
+
+[richiesta]: <stringa>
+[contesto]: <stringa>
+[risposta]: <stringa>
