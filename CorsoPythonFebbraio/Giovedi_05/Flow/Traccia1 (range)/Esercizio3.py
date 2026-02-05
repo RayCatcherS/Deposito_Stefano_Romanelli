@@ -3,28 +3,28 @@
 Chiedi all'utente di inserire due numeri. Il programma dovrebbe determinare e
 stampare i fattori comuni di entrambi i numeri. Se non ci sono fattori comuni
 oltre 1, dovrebbe stampare "I numeri sono coprimi". La stessa cosa ma anche per
-due stringhe (.equal ) e chiedere se deve ripetere ma sono " complementari" solo
+due stringhe (.equal ) e chiedere se deve ripetere ma sono "complementari" solo
 se hanno tutte le lettere in comune (es:abs/ sab)
 """
 
 first = int(input("inserisci il primo numero\n"))
 second = int(input("inserisci il secondo numero\n"))
 
-min = first
 
+min = first
 common = []
-if(first < second):
+if(first < second): # stabilire i fattori comuni rispetto al più piccolo dei numeri inseriti
     min = first
 else:
     min = second
 
 for i in range(1, min + 1):
-    
-    if(first%i == 0 and second%i == 0):
+    if(first%i == 0 and second%i == 0): # verifica se i divide senza resto entrambi i valori numerici
         common.append(i)
 
 
-print(common)
+print("i fattori comuni sono: ", common)
+
 if(len(common) == 1 and common[0] == 1): # non esistono fattori comuni
     print("I numeri sono cooprimi")
 else:
