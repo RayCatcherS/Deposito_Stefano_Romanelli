@@ -33,7 +33,7 @@ while (repeat):
     else:
         print("scelta non valida")
     
-    choose = int(input("Continuare? 1 si, 0 no"))
+    choose = int(input("Continuare? 1 si, 2 no"))
     if(choose == 1):
         repeat = True
     elif(choose == 2):
