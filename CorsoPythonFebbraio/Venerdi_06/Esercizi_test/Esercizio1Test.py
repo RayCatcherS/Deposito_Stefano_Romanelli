@@ -22,7 +22,7 @@ n = int(input("inserisci un numero intero positivo\n"))
 if(n <= 0):
     print("Errore")
 else:
-    for i in range(1, n + 1):
+    for i in range(1, n + 1): # ciclo su tutti i numeri da 1 a n compreso
         if(i%2 == 0):
             print(i, "è pari")
         else:
