@@ -27,7 +27,7 @@ continua a chiedere un numero fino a quando non viene inserito un numero positiv
 """
 import random
 
-randomNumbers = []
+randomNumbers = ()
 listNum = -1
 while(listNum<=0):
     listNum = int(input("inserisci un numero"))
@@ -37,8 +37,10 @@ Genera una lista di numeri interi casuali tra 1 e n (incluso).
 La lunghezza della lista deve essere n.
 """
 print("-------generazione e stampa lista casuale-------")
+randListTemp = []
 for i in range(listNum):
-    randomNumbers.append(random.randrange(1,listNum))
+    randListTemp.append(random.randrange(1,listNum))
+randomNumbers = randListTemp
 print(randomNumbers)
 
 """
