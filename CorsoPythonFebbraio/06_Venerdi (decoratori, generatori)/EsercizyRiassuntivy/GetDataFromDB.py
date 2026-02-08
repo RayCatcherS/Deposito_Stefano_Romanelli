@@ -1,36 +1,48 @@
 import MySqlManager
 
-def getMovies():
-    # Usa l'unpacking (*) per passare le credenziali
-    connection = MySqlManager.GetMysqlConnection(*MySqlManager.dbCredentials)
+def get_film(connection=None) -> list:
     
     if connection is None:
-        print("Impossibile connettersi al DB.")
+        print("Impossibile ottenere i film: connessione al database non fornita.")
         return []
 
     resultsToGet = 10
-    table = "film" 
+    film_attributes = attribute_selection(connection, SQL_TABLE)
+    SQL_TABLE = "film"
+
+    
+    # avvio query
+    filmList = MySqlManager.get_tuples_from_table(
+        connection,
+        SQL_TABLE,
+        attributes = film_attributes,
+        maxResults=resultsToGet
+    )
+    return filmList
+
+
+def attribute_selection(connection, table) -> list:
 
     exit = False
-    movieNameAttriutes = MySqlManager.GetColumnNames(connection, table)
-    selectedAttributes = []
+    movieNameAttriutes = MySqlManager.get_column_names(connection, table)
+    attributes = []
 
     print("-" * 50)
-    print("Ecco i nomi delle colonne della tabella film:")
-    for idx, attributeName in enumerate(movieNameAttriutes):
-        print(f"{idx} - {attributeName}")
+    print(f"Ecco i nomi delle colonne della tabella {table}:")
+    for i, attributeName in enumerate(movieNameAttriutes):
+        print(f"{i} - {attributeName}")
     
-    print("\nSeleziona gli attributi (es. 0, 1...), premi 'q' per finire:")
+        print("\nSeleziona un attributo alla volta, premi 'q' per confermare la selezione:")
     
     while not exit:
-        if len(selectedAttributes) > 0:
-            print(f"Attuali: {selectedAttributes}")
+        if len(attributes) > 0:
+            print(f"Attuali: {attributes}")
         
         userInput = input("Scelta: ")
 
         if userInput.lower() == "q":
-            if len(selectedAttributes) == 0:
-                selectedAttributes = ["*"]
+            if len(attributes) == 0:
+                attributes = ["*"]
             exit = True
         else:
             try:
@@ -38,22 +50,13 @@ def getMovies():
                 if 0 <= index < len(movieNameAttriutes):
                     attributeName = movieNameAttriutes[index] 
                     
-                    if attributeName in selectedAttributes:
+                    if attributeName in attributes:
                         print("Già presente.")
                     else:
-                        selectedAttributes.append(attributeName) 
+                        attributes.append(attributeName) 
                 else:
                     print("Indice non valido.")
             except ValueError:
                 print("Input non valido.")
-    
-    # Ora passiamo la lista pulita di stringhe
-    filmList = MySqlManager.GetTuplesFromQuery(
-        connection,
-        table,
-        attributes=selectedAttributes,
-        maxResults=resultsToGet
-    )
-    
-    connection.close()
-    return filmList
+                
+    return attributes

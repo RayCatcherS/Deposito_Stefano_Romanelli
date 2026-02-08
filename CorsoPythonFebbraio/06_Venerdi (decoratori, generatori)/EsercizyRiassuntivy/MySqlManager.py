@@ -3,7 +3,7 @@ import mysql.connector
 # Credenziali db
 dbCredentials = ("localhost", "root", "password", "sakila")
 
-def GetMysqlConnection(host, user, password, database):
+def get_my_sql_connection(host, user, password, database):
     try:
         return mysql.connector.connect(
             host=host,
@@ -15,7 +15,7 @@ def GetMysqlConnection(host, user, password, database):
         print(f"Errore di connessione: {err}")
         return None
 
-def GetTuplesFromQuery(conn, table: str, attributes=["*"], maxResults: int=None) -> list:
+def get_tuples_from_table(conn, table: str, attributes=["*"], maxResults: int=None) -> list:
     result = []
     cursor = None # Inizializziamo a None
     
@@ -47,7 +47,7 @@ def GetTuplesFromQuery(conn, table: str, attributes=["*"], maxResults: int=None)
     
     return result
 
-def GetColumnNames(conn, table: str) -> list:
+def get_column_names(conn, table: str) -> list:
     columnNames = []
     cursor = None
     
