@@ -37,3 +37,21 @@ def GetTuplesFromQuery(conn, table: str, attributes = ["*"], maxResults: int=Non
             result.append(sqlTupleList[element])
 
     return result
+
+def GetColumnNames(conn, table: str) -> list:
+    columnNames = []
+    if conn.is_connected():
+        print("Connessione al database riuscita!\n")
+    
+        # 2. Crea il cursore
+        cursor = conn.cursor()
+        query = f"SELECT * FROM {table} LIMIT 1;"
+            
+
+        # Esegui la query
+        cursor.execute(query)
+
+        # Prendi i nomi delle colonne
+        columnNames = [i[0] for i in cursor.description]
+
+    return columnNames
