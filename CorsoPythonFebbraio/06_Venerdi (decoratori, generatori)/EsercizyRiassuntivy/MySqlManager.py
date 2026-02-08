@@ -1,57 +1,76 @@
 import mysql.connector
 
-# credenziali db
+# Credenziali db
 dbCredentials = ("localhost", "root", "password", "sakila")
 
-def GetMysqlConnection(host: str, user: str, password: str, database: str):
-    _ = mysql.connector.connect(
-        host=host,
-        user=user,
-        password=password,  # <--- INSERISCI QUI LA TUA PASSWORD DI ROOT
-        database=database            # <--- IL NOME DEL TUO DB (es. sakila)
-    )
-    return _
+def GetMysqlConnection(host, user, password, database):
+    try:
+        return mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+        )
+    except mysql.connector.Error as err:
+        print(f"Errore di connessione: {err}")
+        return None
 
-# restituirà una lista di tuple
-# attributes si aspetta una lista di stringhe, es. ["title", "release_year", "rating"] se non passi nulla seleziona tutto (*)
-def GetTuplesFromQuery(conn, table: str, attributes = ["*"], maxResults: int=None) -> list:
-    
+def GetTuplesFromQuery(conn, table: str, attributes=["*"], maxResults: int=None) -> list:
     result = []
-    if conn.is_connected():
-        print("Connessione al database riuscita!\n")
+    cursor = None # Inizializziamo a None
     
-        # 2. Crea il cursore
-        cursor = conn.cursor()
-        query = f"SELECT {', '.join(attributes)} FROM {table} LIMIT {maxResults};"
+    # Controllo se la connessione esiste ed è aperta
+    if conn and conn.is_connected():
+        try:
+            cursor = conn.cursor()
             
-
-        # Esegui la query
-        cursor.execute(query)
-
-        # Prendi tutti i risultati (ottieni una lista di tuple sql)
-        sqlTupleList = cursor.fetchall()
-
-        #  
-        for element in range(len(sqlTupleList)):
-            #genera una copia delle tupla con i dati che mi interessano
-            result.append(sqlTupleList[element])
-
+            # Costruzione Query Dinamica
+            cols_string = ', '.join(attributes)
+            query = f"SELECT {cols_string} FROM {table}"
+            
+            if maxResults:
+                query += f" LIMIT {maxResults}"
+            
+            # Eseguiamo
+            cursor.execute(query)
+            
+            # fetchall restituisce già una lista di tuple. 
+            # Non serve il ciclo for per copiarle una a una!
+            result = cursor.fetchall()
+            
+        except mysql.connector.Error as err:
+            print(f"Errore SQL in GetTuplesFromQuery: {err}")
+            
+        finally:
+            if cursor:
+                cursor.close()
+    
     return result
 
 def GetColumnNames(conn, table: str) -> list:
     columnNames = []
-    if conn.is_connected():
-        print("Connessione al database riuscita!\n")
+    cursor = None
     
-        # 2. Crea il cursore
-        cursor = conn.cursor()
-        query = f"SELECT * FROM {table} LIMIT 1;"
+    if conn and conn.is_connected():
+        try:
+            cursor = conn.cursor()
+            # Limit 0 è perfetto, ma dobbiamo gestire il cursore dopo
+            query = f"SELECT * FROM {table} LIMIT 0;" 
+            cursor.execute(query)
             
-
-        # Esegui la query
-        cursor.execute(query)
-
-        # Prendi i nomi delle colonne
-        columnNames = [i[0] for i in cursor.description]
+            # Prendi i nomi
+            if cursor.description:
+                columnNames = [col[0] for col in cursor.description]
+                
+            # --- PUNTO CRUCIALE 2: PULIZIA ---
+            # Anche se non ci sono righe, dobbiamo dire a MySQL che abbiamo finito
+            cursor.fetchall() 
+            
+        except mysql.connector.Error as err:
+            print(f"Errore recupero colonne: {err}")
+            
+        finally:
+            if cursor:
+                cursor.close()
 
     return columnNames
