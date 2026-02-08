@@ -1,5 +1,8 @@
 import GetDataFromDB
 import MySqlManager
+import Tool.InputOperations
+
+FILM_TABLE = "film"
 
 def main():
     connection = None
@@ -7,9 +10,17 @@ def main():
         # Usa l'unpacking (*) per passare le credenziali splat dalla tupla
         connection = MySqlManager.get_my_sql_connection(*MySqlManager.dbCredentials)
 
-        filmList = GetDataFromDB.get_film()
 
-        print(f"Ho trovato {len(filmList)} risultati. Ecco i primi 10:")
+        print("tabelle disponibili:")
+        # Otteniamo i nomi di tutte le tabelle del database
+        tables_name = MySqlManager.get_schema_tables_names(connection)
+
+        # l'utente seleziona una stringa da una lista di stringhe (tabelle) 
+        selected_table = Tool.InputOperations.input_single_select_from_list(tables_name)
+
+        filmList = GetDataFromDB.get_tuple_from_table(connection, selected_table)
+
+        print(f"Ho trovato {len(filmList)} risultati:")
         print("-" * 50)
 
         print(filmList)
@@ -19,5 +30,6 @@ def main():
         if connection and connection.is_connected():
             connection.close()
             print("Connessione chiusa. Arrivederci!")
+
 
 main()

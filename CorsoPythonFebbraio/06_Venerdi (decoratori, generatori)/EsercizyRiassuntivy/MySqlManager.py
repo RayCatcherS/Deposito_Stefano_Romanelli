@@ -50,7 +50,7 @@ def get_tuples_from_table(conn, table: str, attributes=["*"], maxResults: int=No
     return result
 
 # Funzione per ottenere i nomi delle colonne di una tabella
-def get_column_names(conn, table: str) -> list:
+def get_column_names(conn, table: str) -> tuple:
     columnNames = []
     cursor = None
     
@@ -76,4 +76,27 @@ def get_column_names(conn, table: str) -> list:
             if cursor:
                 cursor.close()
 
-    return columnNames
+    result = tuple(columnNames)
+    return result
+
+
+# Funzione per ottenere i nomi di tutte le tabelle del database
+def get_schema_tables_names(connection) -> tuple:
+    
+    dbName = connection.database
+    cursor = connection.cursor()
+
+    # query per ottenere i nomi delle tabelle dal database specificato
+    query = f"""
+        SELECT table_name 
+        FROM information_schema.tables 
+        WHERE table_schema = '{dbName}' 
+        AND table_type = 'BASE TABLE';
+    """
+
+    cursor.execute(query)
+    results = cursor.fetchall()
+    cursor.close()
+
+    # trasforma la lista di tuple in una tupla di stringhe con i nomi delle tabelle
+    return tuple(row[0] for row in results)
