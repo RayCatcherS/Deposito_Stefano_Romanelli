@@ -1,5 +1,6 @@
 import MySqlManager
 
+# Questo modulo contiene funzioni per recuperare dati specifici dal database, in questo caso i film.
 def get_film(connection=None) -> list:
     
     if connection is None:
@@ -20,7 +21,7 @@ def get_film(connection=None) -> list:
     )
     return filmList
 
-
+# Funzione per selezionare dinamicamente gli attributi da visualizzare
 def attribute_selection(connection, table) -> list:
 
     exit = False

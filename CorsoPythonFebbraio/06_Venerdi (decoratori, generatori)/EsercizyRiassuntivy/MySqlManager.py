@@ -3,6 +3,7 @@ import mysql.connector
 # Credenziali db
 dbCredentials = ("localhost", "root", "password", "sakila")
 
+# Funzione per ottenere una connessione al database MySQL
 def get_my_sql_connection(host, user, password, database):
     try:
         return mysql.connector.connect(
@@ -15,6 +16,7 @@ def get_my_sql_connection(host, user, password, database):
         print(f"Errore di connessione: {err}")
         return None
 
+# Funzione per eseguire una query dinamica e restituire i risultati come lista di tuple
 def get_tuples_from_table(conn, table: str, attributes=["*"], maxResults: int=None) -> list:
     result = []
     cursor = None # Inizializziamo a None
@@ -47,6 +49,7 @@ def get_tuples_from_table(conn, table: str, attributes=["*"], maxResults: int=No
     
     return result
 
+# Funzione per ottenere i nomi delle colonne di una tabella
 def get_column_names(conn, table: str) -> list:
     columnNames = []
     cursor = None
