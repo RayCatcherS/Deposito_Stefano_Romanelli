@@ -125,5 +125,4 @@ def gestisci_ristoranti():
         else:
             print("Scelta non valida. Riprova.")
 
-
 gestisci_ristoranti()

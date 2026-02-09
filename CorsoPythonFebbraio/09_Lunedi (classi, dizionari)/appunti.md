@@ -84,3 +84,22 @@ Person.x = 30      # modifica l'attributo di classe x, influenzando tutti gli og
 
 ### metodo di istanza
 - Serve a definire comportamenti specifici per ogni istanza della classe, accettano come primo parametro self, che rappresenta l'istanza stessa. Viene definito senza decoratori speciali.
+
+
+# Dizionari
+- sono strutture (oggetti) dati che memorizzano coppie chiave-valore
+- sono mutabili, ordinata
+- sono delimitati da parentesi graffe {}
+- tipo di dato dict 
+ESEMPIO:
+dizionario = {"chiave1": "valore1", "chiave2":
+"valore2"}
+dizionario["chiave1"]     # restituisce "valore1"
+- le chiavi devono essere univoche e immutabili (es. stringhe, numeri, tuple)
+- i valori possono essere di qualsiasi tipo
+
+
+- sono utili per rappresentare oggetti e tabelle di dati (valori)
+
+## metodi e funzioni per i dizionari
+Sono presenti nel file Dizionatri.py
