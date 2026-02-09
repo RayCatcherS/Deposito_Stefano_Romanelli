@@ -1,4 +1,4 @@
-import Esercizio2_con_extra
+import Esercizio2_con_extra as Libro
 
 class Biblioteca:
     nome = ""
@@ -7,7 +7,7 @@ class Biblioteca:
         self.nome = nome
         self.libri = []
     
-    def aggiungi_libro(self, libro):
+    def aggiungi_libro(self, libro: Libro):
         self.libri.append(libro)
     
     def mostra_libri(self):
@@ -22,7 +22,7 @@ def inserisci_libri():
             titolo = input("Inserisci il titolo del libro: ")
             autore = input("Inserisci l'autore del libro: ")
             pagine = int(input("Inserisci il numero di pagine del libro: "))
-            libro = Esercizio2_con_extra.Libro(titolo, autore, pagine)
+            libro = Libro(titolo, autore, pagine)
             biblioteca.aggiungi_libro(libro)
         else:
             break
