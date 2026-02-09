@@ -2,8 +2,6 @@ import GetDataFromDB
 import MySqlManager
 import Tool.InputOperations
 
-FILM_TABLE = "film"
-
 def main():
     connection = None
     try:

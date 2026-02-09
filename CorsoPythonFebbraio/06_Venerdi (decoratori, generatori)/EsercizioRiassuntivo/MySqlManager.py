@@ -1,9 +1,12 @@
 import mysql.connector
+import Tool.Decorators
+from Tool.Decorators import measure_time, log_execution 
 
 # Credenziali db
 dbCredentials = ("localhost", "root", "password", "sakila")
 
 # Funzione per ottenere una connessione al database MySQL
+# @log_execution
 def get_my_sql_connection(host, user, password, database):
     try:
         return mysql.connector.connect(
@@ -17,6 +20,7 @@ def get_my_sql_connection(host, user, password, database):
         return None
 
 # Funzione per eseguire una query dinamica e restituire i risultati come lista di tuple
+# @measure_time
 def get_tuples_from_table(conn, table: str, attributes=["*"], maxResults: int=None) -> list:
     result = []
     cursor = None # Inizializziamo a None
