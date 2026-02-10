@@ -30,7 +30,9 @@ class Fabbrica():
             return "0"
         else:
             return str(len(self.prodotti)+ 1) 
-        
+    
+    # aggiungi prodotto, se non esistente viene aggiunto alla lista prodotti e al vocabolario
+    # se esistente viene aggiornato solo il dizionario
     def aggiungi_prodotto(self, prodotto: Prodotto):
 
         # aggiorna inventario e prodotti
@@ -47,7 +49,8 @@ class Fabbrica():
     def visualizza_inventario(self):
         for chiave, valore in self.inventario.items():
             print(f"{chiave}: {valore}")
-
+    
+    # se il è disponibile nell'inventario viene decrementata la qta. e aggiornato il profitto
     def vendi_prodotto(self, p_name: str):
         if p_name in self.inventario.keys():
 
@@ -70,6 +73,7 @@ class Fabbrica():
         else:
             print("il prodotto non è presente")
     
+    # incrementa qta prodotto all'inventario
     def resi_prodotto(self, p_name):
         if p_name in self.inventario.keys():
 
@@ -77,7 +81,7 @@ class Fabbrica():
             self.inventario[p_name] = self.inventario[p_name] + 1
         else:
             print("il prodotto non è presente")
-
+    
     def visualizza_profitto(self):
         print(self.profitto)
 
