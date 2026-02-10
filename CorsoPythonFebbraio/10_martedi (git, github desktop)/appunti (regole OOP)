@@ -1,0 +1,28 @@
+# OOP Regole
+
+incapsulamento: permette di nascondere i dettagli interni alla class, 
+- espone solo le interfacce necessarie per interagire
+- aiuta a mantenere il codice mulare e sicuro
+
+ereditarietà: consente di costruire classi derivate a partire da classi esistenti
+- riutilizzando il comportamento della classe padre
+- specializzando il comportamento nella classe definita
+- favorisce riusabilità del codice (organizzazione gerarchica)  
+- python si possono avere molti padri e molti figli (multiereditarietà)
+
+
+polimorfismo: permette di trattare oggetti di classi differenti attraverso un'interfaccia comune
+- facilita l'estensione e la gestione del codice
+capacità di cambiare forma e comportamento ad un elemento senza cambiarne il tipo
+
+
+## metodi ereditarietà
+- classe padre: super classe
+- classe figlio (sotto classe)
+
+Metodi
+- super. permette di chiamare i metodi della classe padre (metodi, costruttori)
+- override (sovrascrittura) dei metodi dei genitori
+- overload (sovraccarico) di metodi, stessi nomi, parametri diversi
+
+- ereditarietà multipla: è possibile ereditare più classi

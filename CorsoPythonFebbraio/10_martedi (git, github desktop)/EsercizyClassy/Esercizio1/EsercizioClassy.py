@@ -107,6 +107,5 @@ class Magazzino:
                 pacchi_filtrati.append(pacco)
         return pacchi_filtrati
     
-    
             
 
