@@ -1,5 +1,5 @@
 # Classi python
-- le classi permette di creare nuovi tipi di dati
+- le classi permettono di creare nuovi tipi di dati
 - sono un modello di riferimento per la creazione di oggetti
 
 
