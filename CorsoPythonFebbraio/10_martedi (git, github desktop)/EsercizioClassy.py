@@ -1,3 +1,5 @@
+import datetime
+
 IN_CONSEGNA = "IN_CONSEGNA"
 IN_MAGAZZINO = "IN_MAGAZZINO"
 CONSEGNATO = "CONSEGNATO"
@@ -6,9 +8,12 @@ class Pacco:
     codice:str = ""
     peso:float = 0.0
     stato:str = IN_MAGAZZINO
+    storia:list = []
     def __init__(self, codice:str, peso:float):
         self.codice = codice
         self.peso = peso
+        # Aggiungiamo lo storico con la data di creazione e orario di creazione del pacco
+        self.storia = [f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}: Creato in magazzino"]
 
     @staticmethod
     def ottieni_stati_validi():
@@ -16,21 +21,16 @@ class Pacco:
       
     def mostra_info(self):
         print(f"Codice: {self.codice}, Peso: {self.peso}, Stato: {self.stato}")
+        print("Storia del pacco:")
+        for evento in self.storia:
+            print(f" - {evento}")
     
-    def cambia_stato(self):
-        while True:
-            stati_validi = Pacco.ottieni_stati_validi()
-            print("Seleziona l'indice del nuovo stato:")
-            for i, stato in enumerate(stati_validi):
-                print(f"{i}: {stato}")
-            scelta = input("Inserisci l'indice del nuovo stato: ")
-
-            if scelta.isdigit() and 0 <= int(scelta) < len(stati_validi):
-                self.stato = stati_validi[int(scelta)] # Cambia lo stato del pacco in base alla scelta dell'utente
-                print(f"Stato cambiato a: {self.stato}")
-                break
-            else:
-                print("Scelta non valida. Riprova.")
+    def cambia_stato(self, nuovo_stato:str):
+        if nuovo_stato in Pacco.ottieni_stati_validi():
+            self.storia.append(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}: Stato cambiato da {self.stato} a {nuovo_stato}")
+            self.stato = nuovo_stato
+        else:
+            print(f"Errore, stato non valido: {nuovo_stato}")
 
 class GestorePacchi:
     
@@ -89,22 +89,23 @@ class Magazzino:
     def cerca_pacco(self, codice:str):
         return self.pacchi.get(codice, None) # Restituisce il pacco se trovato, altrimenti None
     
-    # mostra i pacchi di un certo stato e restituisce la lista dei pacchi filtrati
-    def mostra_pacchi_per_stato(self, stato:str):
-        pacchi_filtrati = []
-
-        for pacco in self.pacchi.values():
-            if pacco.stato == stato:
-                pacchi_filtrati.append(pacco)
+    # mostra i pacchi di un inseiem di stati e restituisce la lista dei pacchi filtrati
+    def mostra_pacchi_per_stato(self, stati:set):
+        pacchi_filtrati = self.filtra_pacchi_per_stato(stati)
 
         if pacchi_filtrati:
-            print(f"Pacchi con stato '{stato}':")
+            print(f"Pacchi con stato/i '{stati}':")
             for pacco in pacchi_filtrati:
                 pacco.mostra_info()
         else:
-            print(f"Nessun pacco trovato con stato '{stato}'.")
-        return pacchi_filtrati
+            print(f"Nessun pacco trovato con stato/i '{stati}'.")
 
+    def filtra_pacchi_per_stato(self, stato:set):
+        pacchi_filtrati = []
+        for pacco in self.pacchi.values():
+            if pacco.stato in stato:
+                pacchi_filtrati.append(pacco)
+        return pacchi_filtrati
     
     
             
@@ -129,7 +130,11 @@ def main():
     magazzino.mostra_pacchi_per_stato(IN_CONSEGNA)
 
     # somma peso totale pacchi non consegnati
-    somma_peso_non_consegnati = magazzino.gestore_pacchi.calcola_peso_tot(magazzino.mostra_pacchi_per_stato(IN_MAGAZZINO))
+    somma_peso_non_consegnati = magazzino.gestore_pacchi.calcola_peso_tot(magazzino.filtra_pacchi_per_stato(IN_MAGAZZINO))
     print("Peso totale pacchi non consegnati:", somma_peso_non_consegnati)
+
+    # visualizza pacchi consegnati
+    print("Pacchi spediti e consegnati:")
+    magazzino.mostra_pacchi_per_stato({CONSEGNATO, IN_CONSEGNA})
 
 main()
