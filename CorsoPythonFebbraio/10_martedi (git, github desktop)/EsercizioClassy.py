@@ -103,6 +103,7 @@ class Magazzino:
                 pacco.mostra_info()
         else:
             print(f"Nessun pacco trovato con stato '{stato}'.")
+        return pacchi_filtrati
 
     
     
