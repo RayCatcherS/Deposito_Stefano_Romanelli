@@ -1,8 +1,8 @@
 import datetime
 
-
 USER_ROLE = "cliente"
 ADMIN_ROLE = "admin"
+
 class Negozio:
     nome = None
     articoli = None
