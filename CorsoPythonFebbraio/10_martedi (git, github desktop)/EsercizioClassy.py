@@ -89,7 +89,7 @@ class Magazzino:
     def cerca_pacco(self, codice:str):
         return self.pacchi.get(codice, None) # Restituisce il pacco se trovato, altrimenti None
     
-    # mostra i pacchi di un certo stato
+    # mostra i pacchi di un certo stato e restituisce la lista dei pacchi filtrati
     def mostra_pacchi_per_stato(self, stato:str):
         pacchi_filtrati = []
 
