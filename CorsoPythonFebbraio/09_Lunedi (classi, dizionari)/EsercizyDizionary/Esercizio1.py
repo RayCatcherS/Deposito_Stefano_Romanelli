@@ -190,8 +190,6 @@ class Negozio:
 
         print(utente)
 
-    
-        
 
 def visualizzaNegozi():
     # stama i negozi disponibili con indice
