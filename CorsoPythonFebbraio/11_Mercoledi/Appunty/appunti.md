@@ -31,3 +31,11 @@ invece su protected è una convenzione ed è visibile ai figli
         funzione
             nonlocal z # permette di accedere alla variabile superiore (senza sarebbe uno scope interno)
             z = 10
+
+
+# polimorfismo
+metodi polimorfici (sul tipo di dato)
+
+# overload non esiste si può simulare
+(meccanismo basato sui parametri)è possibile simulare l'overloading utilizzando argomenti opzionali o variadici
+

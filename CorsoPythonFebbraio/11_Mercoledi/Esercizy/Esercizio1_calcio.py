@@ -192,10 +192,11 @@ def main():
 
         # attacco
         Giocatore("Goku", 22, RUOLO_ATTACCANTE, 6, 7, 3),
-        Giocatore("Ian", 22, RUOLO_ATTACCANTE, 7, 8, 2)
+        Giocatore("Ian", 22, RUOLO_ATTACCANTE, 7, 8, 2),
+
+        Allenatore("Pedro", 44),
+        Assistente("Pascal", 26)
     ]
-    allenatore2 = Allenatore("Pedro", 44)
-    assistente2 = Assistente("Pascal", 26)
 
     sq2 = Squadra(g_sq2)
 
