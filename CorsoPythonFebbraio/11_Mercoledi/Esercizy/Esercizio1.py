@@ -22,9 +22,9 @@ class MembroSquadra():
         self.eta = eta
 
     def descrivi(self):
-        print(f"Il membro si chiama {self.nome} di eta {self.eta}, ed è un {self.__class__.__name__}")
+        return f"{self.nome} - {self.__class__.__name__}"
     
-    # polimorfismo
+    # polimorfismo genera mossa
     def genera_mossa(self) -> Mossa:
         pass
 
@@ -38,7 +38,10 @@ class Giocatore(MembroSquadra):
         self.attacco = attacco
         self.difesa = difesa
     
-    def genera_mossa(self):
+    # comportamento generazione mossa giocatore
+    # il giocatore randomizza l'attacco e la difesa della mossa partendo dalle sue statistiche 
+    # il tipo di mossa scelta è casuale
+    def genera_mossa(self) -> Mossa:
         # randomizza la mossa ATTACCO O DIFESA
         tipo_mossa = random.choice(self.mosse_possibili)
 
@@ -52,16 +55,18 @@ class Allenatore(MembroSquadra):
     def __init__(self, nome:str, eta:int):
         MembroSquadra.__init__(self, nome, eta)
     
+    # comportamento generazione mossa giocatore
     # l'allenatore genera la mossa attacco col max
-    def genera_mossa(self):
+    def genera_mossa(self) -> Mossa:
         return Mossa(ATTACCA, 10, 0)
 
 class Assistente(MembroSquadra):
     def __init__(self, nome:str, eta:int):
         MembroSquadra.__init__(self, nome, eta)
 
+    # comportamento generazione mossa giocatore
     # l'assistente genera la mossa di difesa col max
-    def genera_mossa(self):
+    def genera_mossa(self) -> Mossa:
         return Mossa(DIFENDI, 0, 10)
 
 
@@ -71,32 +76,21 @@ class Squadra():
     def __init__(self, lista_membri: list):
         self.squadra = lista_membri
     
-    def select_giocatore_scontro(self) -> MembroSquadra
+    def select_giocatore_scontro(self) -> MembroSquadra:
         # seleziona giocatore casuale
         return random.choice(self.squadra)
 
 class Partita():
-    
-
     def __init__(self, sq1: Squadra, sq2: Squadra, turni):
         self.sq1 = sq1
         self.sq2 = sq2
         self.turni = turni
         self.punti_squadra1 = punti_squadra1 = 0
         self.punti_squadra2 = punti_squadra2 = 0
-
-    def gioca(self)
-        for i in range(self.turni)
-            print(f"\n--- TURNO {i+1} ---")
-            time.sleep(1) # Wait per l'inizio del turno
-            self.avvia_scontro()
-            self.print_punteggio_partita()
-            time.sleep(1.5) # Wait tra un turno e l'altro
-
-        print("\n=== FISCHIO FINALE ===")
-        self.print_punteggio_partita()
     
-    def avvia_scontro(self):
+    # avvio del turno prevede la selezione di due giocatori casuali dalle due squadre
+    # se la mossa del primo giocatore è "difendi" il secondo giocatore "attacca" e viceversa
+    def __avvia_turno(self):
         # selezione casuale dei due membre dalle squadre
         membro1 = self.sq1.select_giocatore_scontro()
         membro2 = self.sq2.select_giocatore_scontro() 
@@ -105,38 +99,58 @@ class Partita():
         mossa2 = membro2.genera_mossa()
 
         # Annuncio della sfida
-        print(f"SFIDA: {membro1.nome} (SQ1) sfida {membro2.nome} (SQ2)!")
-        time.sleep(1)
+        print(f"SFIDA: {membro1.descrivi()} (SQ1) e {membro2.descrivi()} (SQ2) si sfidano!")
+        self.__next_turn_step()
 
         # la squadra 1 attacca
         if mossa1.tipo_mossa == ATTACCA:
-
+            print(f"{membro1.descrivi()} (SQ1) lancia un attacco! Attacco: {mossa1.attacco_mossa} su {membro2.descrivi()} con difesa: {mossa2.difesa_mossa}")
+            self.__next_turn_step()
             # se la difesa della mossa della squadra 2 < attacco della mossa della squadra 1
             # => squadra 1 segna
-            if mossa1.attacco_mossa > mossa2.difesa_mossa
+            if mossa1.attacco_mossa > mossa2.difesa_mossa:
                 # squadra 1 segna
-                punti_squadra1 = punti_squadra1 + 1
-                print("squadra 1 segna!")
+                self.punti_squadra1 = self.punti_squadra1 + 1
+                print(f"GOL della Squadra 1! L'attacco: di {membro1.nome} (SQ1) batte la difesa di {membro2.nome} (SQ2)")
 
             else:
                 # squadra 1 non riesce a segnare
-                pass
-        elif mossa1.tipo_mossa == DIFENDI
+                print(f"Difesa impenetrabile! difesa: {membro2.nome} (SQ2) ferma l'attacco di {membro1.nome} (SQ1).")
 
+        elif mossa1.tipo_mossa == DIFENDI:
+            print(f"{membro2.descrivi()} (SQ2) lancia un attacco! Attacco: {mossa2.attacco_mossa} su {membro1.descrivi()} con difesa: {mossa1.difesa_mossa}")
+            self.__next_turn_step()
             # se la difesa della mossa della squadra 1 < attacco della mossa della squadra 2
             # => squadra 2 segna
-            if mossa1.difesa_mossa < mossa2.attacco_mossa
+            if mossa1.difesa_mossa < mossa2.attacco_mossa:
                 # squadra 2 segna
-                punti_squadra2 = punti_squadra2 + 1
-                print("squadra 2 segna!")
+                self.punti_squadra2 = self.punti_squadra2 + 1
+                print(f"GOL della Squadra 2! L'attacco di {membro2.nome} (SQ2) batte la difesa di {membro1.nome} (SQ1)")
             else:
                 # squadra 2 non riesce a segnare
-                pass
+                print(f"Difesa impenetrabile! difesa: {membro1.nome} (SQ1) ferma l'attacco di {membro2.nome} (SQ2).")
         else:
             print("errore scontro")
     
-    def print_punteggio_partita():
-        print(f"Squadra 1: {punti_squadra1} | Squadra 2: {punti_squadra2}")
+    # gioco principale
+    def gioca(self):
+        for i in range(self.turni):
+            print(f"\n--- TURNO {i+1} ---")
+            time.sleep(1) # Wait per l'inizio del turno
+            self.__avvia_turno()
+            self.print_punteggio_partita()
+            time.sleep(1.5) # Wait tra un turno e l'altro
+
+        print("\n=== FISCHIO FINALE ===")
+        self.print_punteggio_partita()
+
+    # qualsiasi input fa procedere lo step del turno
+    def __next_turn_step(self):
+        # premi qualsiasi tasto per lo step successivo
+        _= input("")
+
+    def print_punteggio_partita(self):
+        print(f"PUNTEGGIO -> Squadra 1: {self.punti_squadra1} | Squadra 2: {self.punti_squadra2}")
 
 
 
@@ -183,8 +197,9 @@ def main():
     allenatore2 = Allenatore("Pedro", 44)
     assistente2 = Assistente("Pascal", 26)
 
-    sq2 = Squadra(allenatore2, assistente2, g_sq2)
+    sq2 = Squadra(g_sq2)
 
     # nuova partita
     partita = Partita(sq1, sq2, 10)
+    partita.gioca()
 main()
