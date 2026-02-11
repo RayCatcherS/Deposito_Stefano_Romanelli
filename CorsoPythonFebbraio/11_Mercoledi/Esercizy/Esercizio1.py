@@ -88,6 +88,18 @@ class Partita():
         self.punti_squadra1 = punti_squadra1 = 0
         self.punti_squadra2 = punti_squadra2 = 0
     
+    # gioco principale
+    def gioca(self):
+        for i in range(self.turni):
+            print(f"\n--- TURNO {i+1} ---")
+            time.sleep(1) # Wait per l'inizio del turno
+            self.__avvia_turno()
+            self.print_punteggio_partita()
+            time.sleep(1.5) # Wait tra un turno e l'altro
+
+        print("\n=== FISCHIO FINALE ===")
+        self.print_punteggio_partita()
+
     # avvio del turno prevede la selezione di due giocatori casuali dalle due squadre
     # se la mossa del primo giocatore è "difendi" il secondo giocatore "attacca" e viceversa
     def __avvia_turno(self):
@@ -131,18 +143,6 @@ class Partita():
                 print(f"Difesa impenetrabile! difesa: {membro1.nome} (SQ1) ferma l'attacco di {membro2.nome} (SQ2).")
         else:
             print("errore scontro")
-    
-    # gioco principale
-    def gioca(self):
-        for i in range(self.turni):
-            print(f"\n--- TURNO {i+1} ---")
-            time.sleep(1) # Wait per l'inizio del turno
-            self.__avvia_turno()
-            self.print_punteggio_partita()
-            time.sleep(1.5) # Wait tra un turno e l'altro
-
-        print("\n=== FISCHIO FINALE ===")
-        self.print_punteggio_partita()
 
     # qualsiasi input fa procedere lo step del turno
     def __next_turn_step(self):
