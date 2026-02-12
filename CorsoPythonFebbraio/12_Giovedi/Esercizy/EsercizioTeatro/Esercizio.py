@@ -35,8 +35,9 @@ class Posto:
         return f" Numero: {self._numero}, Fila {self._fila}, prenotato: {self._occupato}"
 
 class PostoVip(Posto):
-    _servizi = set()
+    
     def __init__(self, numero: int, fila: int):
+        self._servizi: set = {}
         Posto.__init__(self, numero, fila)
         
     def prenota(self):
@@ -67,7 +68,7 @@ class PostoVip(Posto):
         return servizi_selezionati
 
     def info_posto(self) -> str:
-        return super().info_posto() + "Servizi extra selezionati:" + str(self._servizi)
+        return super().info_posto() + " Servizi extra: " + str(self._servizi)
                 
 
 class PostoStandard(Posto):
@@ -87,9 +88,9 @@ class PostoStandard(Posto):
         return string
     
 class Teatro:
-    _lista_posti = []
+    
     def __init__(self):
-        pass
+        self._lista_posti = []
     
     def aggiungi_posto(self, posto: Posto):
         self._lista_posti.append(posto)
