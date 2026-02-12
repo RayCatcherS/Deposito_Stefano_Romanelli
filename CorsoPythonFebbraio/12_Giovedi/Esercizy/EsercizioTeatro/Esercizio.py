@@ -32,19 +32,19 @@ class Posto:
         return self._fila
     
     def info_posto(self) -> str:
-        return f" Numero: {self._numero}, Fila {self._fila}, prenotato {self._occupato}"
+        return f" Numero: {self._numero}, Fila {self._fila}, prenotato: {self._occupato}"
 
 class PostoVip(Posto):
-    servizi = []
+    _servizi = set()
     def __init__(self, numero: int, fila: int):
         Posto.__init__(self, numero, fila)
         
     def prenota(self):
         super().prenota()
-        servizi = self._seleziona_servizi()
+        self._servizi = self._seleziona_servizi()
 
     def _seleziona_servizi(self):
-        servizi_selezionati = []
+        servizi_selezionati = set()
 
         # seleziona da lista di servizi
         # stampa servizi enumerati
@@ -61,13 +61,13 @@ class PostoVip(Posto):
                 break
 
             if scelta >= 0 and scelta < len(SERVIZI_EXTRA):
-                servizi_selezionati.append(SERVIZI_EXTRA[scelta])
+                servizi_selezionati.add(SERVIZI_EXTRA[scelta])
             else:
                 print("Scelta non valida. Riprova")
         return servizi_selezionati
 
     def info_posto(self) -> str:
-        return super().info_posto()#.join(str(self.servizi))
+        return super().info_posto() + "Servizi extra selezionati:" + str(self._servizi)
                 
 
 class PostoStandard(Posto):
