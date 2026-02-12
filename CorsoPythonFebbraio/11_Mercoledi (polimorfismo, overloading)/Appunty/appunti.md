@@ -35,7 +35,10 @@ invece su protected è una convenzione ed è visibile ai figli
 
 # polimorfismo
 metodi polimorfici (sul tipo di dato)
+funzione che tratta quel dato come il tipo più generico possibile
+
 
 # overload non esiste si può simulare
 (meccanismo basato sui parametri)è possibile simulare l'overloading utilizzando argomenti opzionali o variadici
+
 

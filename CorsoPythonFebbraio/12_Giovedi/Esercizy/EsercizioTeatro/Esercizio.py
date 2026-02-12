@@ -129,3 +129,4 @@ teatro.prenota_posto(1,1)
 
 
 teatro.stampa_posti()
+
