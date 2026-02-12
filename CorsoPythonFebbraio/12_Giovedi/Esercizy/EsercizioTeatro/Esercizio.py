@@ -67,7 +67,7 @@ class PostoVip(Posto):
         return servizi_selezionati
 
     def info_posto(self) -> str:
-        return super().info_posto().join(str(self.servizi))
+        return super().info_posto()#.join(str(self.servizi))
                 
 
 class PostoStandard(Posto):
@@ -83,7 +83,8 @@ class PostoStandard(Posto):
         print(f"Costo del biglietto: {self.get_costo()} euro")
         
     def info_posto(self) -> str:
-        return super().info_posto().join(str(self._costo))
+        string = super().info_posto() + f" costo: {str(self._costo)}"
+        return string
     
 class Teatro:
     _lista_posti = []
