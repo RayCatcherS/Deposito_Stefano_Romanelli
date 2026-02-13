@@ -1,6 +1,8 @@
 from implementazioni.Accesso import Accesso
 from abc import ABC, abstractmethod
 
+
+# Astrazione della classe
 class Persona(ABC):
 
     def __init__(self, nome: str, cognome: str):

@@ -9,7 +9,7 @@ class Dipendente(Persona):
     def __init__(self, nome: str, cognome: str, badge: Badge):
         super().__init__(nome, cognome) # chiamata al costruttore della classe padre (Persona)
         # init delle variabili private per la classe Dipenedente
-        self.__badge = badge
+        self.__badge = badge # incapsulamento
 
     # polimorfismo metodo con comportamento specifico per la classe Dipendente
     def get_accesso(self) -> Accesso:
