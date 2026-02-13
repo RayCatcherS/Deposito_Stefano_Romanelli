@@ -7,7 +7,7 @@ class Azienda:
     def __init__(self, id_dipendenti):
         self.__dipendenti = id_dipendenti 
         pass
-
+    
     def esegui_accesso(self, accesso: Accesso):
         if accesso.get_ruolo() == "Visitatore":
             print(f"Benvenuto {accesso.get_ruolo()}")
