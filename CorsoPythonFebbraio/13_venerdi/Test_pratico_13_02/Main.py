@@ -9,13 +9,15 @@ def main():
     visitatore = Visitatore("Mario", "Rossi")
     dipendente1 = Dipendente("Luigi", "Verdi", Badge(1, "Developer"))
     dipendente2 = Dipendente("Giovanni", "borghi", Badge(2, "Manager"))
-    dipendente3 = Dipendente("Paolo", "gialli", Badge(5, "AI developer"))
+
+
+    dipendente3 = Dipendente("Paolo", "gialli", Badge(5, "AI developer")) ## questo id non è presente nell'azienda darà "ID non autorizzato"
 
 
     azienda.esegui_accesso(visitatore.get_accesso())
     azienda.esegui_accesso(dipendente1.get_accesso())
     azienda.esegui_accesso(dipendente2.get_accesso())
-    azienda.esegui_accesso(dipendente3.get_accesso())
+    azienda.esegui_accesso(dipendente3.get_accesso()) # dipendente non autorizzato!
 
 
 main()
