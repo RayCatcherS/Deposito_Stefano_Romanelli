@@ -62,3 +62,27 @@ np alias convenzionale
 - **linspace**: crea un array di numeri distribuiti uniformemente tra due estremi.
 - **random**: genera array con valori casuali con distribuzioni normali o uniforme
 - **sum, meand, std**: funzioni per calcolare somma, media e deviazione standard su elemnti di array
+
+
+## Slicing
+è una tecnica per estrarre parti di sequenze
+
+si ottengono sub array senza copiare i dati, efficiente in termini di memoria
+(non viene copiato il contenuto)
+
+- start: è inclusivo (se omesso è 0)
+- stop: indice finale è esclusivo (se omesso è la lunghezza dell'array)
+- step: è il passo tra un indice e l'altro
+
+```
+array[start:stop:step]
+```
+
+## Fancy Indexing
+tecnica per selezionare elementi di un array, usando una lista di indici
+permette selezione flessibile e non contigua di elementi (rispetto allo slicing).
+
+Differenza: 
+**slicing**: restituisce una vista dell'array originale, senza copiare i dati
+(facendo selezioni rettangolari)
+**fancy indexing**: seleziona elementi non contigui, creando una copia dall'array originali
